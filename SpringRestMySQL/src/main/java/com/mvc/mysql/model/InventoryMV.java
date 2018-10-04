@@ -1,5 +1,7 @@
 package com.mvc.mysql.model;
 
+import java.util.Date;
+
 public class InventoryMV {
 	 private long id;
 	    private String productName;
@@ -7,7 +9,8 @@ public class InventoryMV {
 	    private boolean status;
 	    private int price;
 	    private int quantity;
-
+	    private Date createdOn;
+		private Date updatedOn;
 	   // private EmployeeEntity employeeCategory;
 		public long getId() {
 			return id;
@@ -78,6 +81,30 @@ public class InventoryMV {
 		 */
 		public void setProductDescription(String productDescription) {
 			this.productDescription = productDescription;
+		}
+		/**
+		 * @return the createdOn
+		 */
+		public Date getCreatedOn() {
+			return createdOn;
+		}
+		/**
+		 * @param createdOn the createdOn to set
+		 */
+		public void setCreatedOn(Date createdOn) {
+			this.createdOn = createdOn;
+		}
+		/**
+		 * @return the updatedOn
+		 */
+		public Date getUpdatedOn() {
+			return updatedOn;
+		}
+		/**
+		 * @param updatedOn the updatedOn to set
+		 */
+		public void setUpdatedOn(Date updatedOn) {
+			this.updatedOn = updatedOn;
 		}
 	
 		

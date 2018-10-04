@@ -2,10 +2,9 @@ package com.mvc.mysql.serviceImplementation;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
-import javax.swing.text.html.Option;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -27,27 +26,30 @@ import com.mvc.mysql.service.InventoryService;
 public class InventoryServiceImplementation implements InventoryService {
 
 	@Autowired
-	InventoryRepository repository;
+	InventoryRepository inventoryRepository;
 
 	@Autowired
-	DistributorRepository repo;
-	
-	@Autowired
-	ModelMapper mm;
+	DistributorRepository distributorRepository;
 
-	
+	@Autowired
+	ModelMapper modelMapper;
+
+	Date created = new Date();
+	Date updated = new Date();
+
 	@Override
 	public InventoryMV postCustomer(InventoryVM customer) {
 
-		InventoryEntity c = mm.map(customer, InventoryEntity.class);
-		
-		Optional<DistributorEntity> employee = repo.findById(customer.getEmployeeId());
-		if(!employee.isPresent()) {
-			
+		InventoryEntity c = modelMapper.map(customer, InventoryEntity.class);
+		c.setCreatedOn(created);
+		c.setUpdatedOn(updated);
+		Optional<DistributorEntity> employee = distributorRepository.findById(customer.getEmployeeId());
+		if (!employee.isPresent()) {
+
 		}
 		c.setemployeeCategory(employee.get());
-		InventoryEntity _customer = repository.save(c);
-		return mm.map(_customer, InventoryMV.class);
+		InventoryEntity _customer = inventoryRepository.save(c);
+		return modelMapper.map(_customer, InventoryMV.class);
 //		EmployeeEntity employee = 
 //				c.setemployeeCategory(employeeCategory);
 	}
@@ -56,7 +58,7 @@ public class InventoryServiceImplementation implements InventoryService {
 	public ResponseEntity<String> deleteCustomer(long id) {
 		System.out.println("Delete Customer with ID = " + id + "...");
 
-		repository.deleteById(id);
+		inventoryRepository.deleteById(id);
 
 		return new ResponseEntity<>("Customer has been deleted!", HttpStatus.OK);
 	}
@@ -64,35 +66,39 @@ public class InventoryServiceImplementation implements InventoryService {
 	@Override
 	public List<InventoryMV> getAllCustomers() {
 
-		
-		
 		System.out.println("Get all Products...");
 
 		List<InventoryEntity> customers = new ArrayList<>();
 
-		repository.findAll().forEach(customers::add);
+		inventoryRepository.findAll().forEach(customers::add);
 		Type listType = new TypeToken<List<InventoryEntity>>() {
 		}.getType();
-		return mm.map(customers, listType);
+		return modelMapper.map(customers, listType);
 	}
 
-	
 	@SuppressWarnings("unchecked")
 	@Override
 	public ResponseEntity<InventoryMV> updateCustomer(long id, InventoryVM customer) {
 		System.out.println("Update Customer with ID = " + id + "...");
 
-		Optional<InventoryEntity> customerData = repository.findById(id);
+		Optional<InventoryEntity> customerData = inventoryRepository.findById(id);
 
 		if (customerData.isPresent()) {
 			InventoryEntity _customer = customerData.get();
-			
-			
 			_customer.setProductName(customer.getProductName());
-			return new ResponseEntity<InventoryMV>((MultiValueMap<String, String>) repository.save(_customer),
+			_customer.setUpdatedOn(updated);
+
+			return new ResponseEntity<InventoryMV>(
+					(MultiValueMap<String, String>) (MultiValueMap<String, String>) inventoryRepository.save(_customer),
 					HttpStatus.OK);
 		} else {
 			return new ResponseEntity<InventoryMV>(HttpStatus.NOT_FOUND);
 		}
+	}
+
+	@Override
+	public Optional<InventoryEntity> findById(Long id) {
+		// TODO Auto-generated method stub
+		return inventoryRepository.findById(id);
 	}
 }

@@ -1,4 +1,5 @@
 package com.mvc.mysql.controller;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mvc.mysql.model.InventoryMV;
 import com.mvc.mysql.model.InventoryVM;
-import com.mvc.mysql.model.DistributorMV;
-import com.mvc.mysql.repo.InventoryRepository;
 import com.mvc.mysql.service.InventoryService;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -25,35 +24,29 @@ import com.mvc.mysql.service.InventoryService;
 public class InventoryController {
 
 	@Autowired
-	InventoryRepository repository;
+	InventoryService inventoryService;
 
-	@Autowired
-	InventoryService service;
-	//GET ALL PRODUCT DATA
-	
-	@GetMapping("/education")
+	@GetMapping("/inventory")
 	public List<InventoryMV> getAllCustomers() {
-		
 
-		return service.getAllCustomers();
+		return inventoryService.getAllCustomers();
 	}
 
-	@PostMapping(value = "/education/create")
+	@PostMapping(value = "/inventory/create")
 	public InventoryMV postCustomer(@RequestBody InventoryVM customer) {
 
-		return service.postCustomer(customer);
+		return inventoryService.postCustomer(customer);
 	}
 
-	@DeleteMapping("/education/{id}")
+	@DeleteMapping("/inventory/{id}")
 	public ResponseEntity<String> deleteCustomer(@PathVariable("id") long id) {
-		
 
-		return service.deleteCustomer(id);
+		return inventoryService.deleteCustomer(id);
 	}
-	
-	
-	@PutMapping("/education/{id}")
+
+	@PutMapping("/inventory/{id}")
 	public ResponseEntity<InventoryMV> updateCustomer(@PathVariable("id") long id, @RequestBody InventoryVM customer) {
-		return service.updateCustomer(id, customer);
-}
+		return inventoryService.updateCustomer(id, customer);
+	}
+
 }

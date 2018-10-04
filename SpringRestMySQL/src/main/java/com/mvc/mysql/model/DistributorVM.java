@@ -1,6 +1,5 @@
 package com.mvc.mysql.model;
 
-import java.util.List;
 import java.util.Set;
 
 public class DistributorVM {
@@ -8,6 +7,7 @@ public class DistributorVM {
 	private long id;
 	private String password;
 	private String name;
+	 
 	private Set<InventoryVM> education;
 
 	public String getName() {
@@ -48,7 +48,4 @@ public class DistributorVM {
 		this.password = password;
 	}
 
-	
-	
-	
 }

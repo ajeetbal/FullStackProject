@@ -8,6 +8,7 @@ public class UserMV {
 	private long id;
 	private String password;
 	private String name;
+	private String username;
     private Set<UserDetailsMV> education;
     public String getName() {
 		return name;
@@ -45,5 +46,17 @@ public class UserMV {
 	 */
 	public void setEducation(Set<UserDetailsMV> education) {
 		this.education = education;
+	}
+	/**
+	 * @return the username
+	 */
+	public String getUsername() {
+		return username;
+	}
+	/**
+	 * @param username the username to set
+	 */
+	public void setUsername(String username) {
+		this.username = username;
 	}
 }

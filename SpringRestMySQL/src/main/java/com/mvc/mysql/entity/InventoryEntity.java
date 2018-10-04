@@ -1,5 +1,7 @@
 package com.mvc.mysql.entity;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,132 +14,139 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 @Entity
 @Table(name = "inventory")
 public class InventoryEntity {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-	    private long id;
-	    private String productName;
-	    private String productDescription;    
-	    private DistributorEntity employeeCategory;
-	    @Column(name="status")
-	    private boolean status;
-	    
-	    @Column(name="price")
-	    private int price;
-	    
-	    @Column(name="quantity")
-	    private int quantity;
-	    
-	    
-	    /**
-		 * @return the status
-		 */
-		public boolean getStatus() {
-			return status;
-		}
+	@Column(name = "productName")
+	private String productName;
 
-		/**
-		 * @param status the status to set
-		 */
-		public void setStatus(boolean status) {
-			this.status = status;
-		}
+	@Column(name = "productDescription")
+	private String productDescription;
 
-		/**
-		 * @return the price
-		 */
-		public int getPrice() {
-			return price;
-		}
+	@NotNull
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "distributor_id", referencedColumnName = "id")
+	private DistributorEntity distributor;
 
-		/**
-		 * @param price the price to set
-		 */
-		public void setPrice(int price) {
-			this.price = price;
-		}
+	@Column(name = "status")
+	private boolean status;
 
-		
+	@Column(name = "price")
+	private int price;
 
-		/**
-		 * @return the quantity
-		 */
-		public int getQuantity() {
-			return quantity;
-		}
+	@Column(name = "quantity")
+	private int quantity;
 
-		/**
-		 * @param quantity the quantity to set
-		 */
-		public void setQuantity(int quantity) {
-			this.quantity = quantity;
-		}
+	@Column(name = "createdOn")
+	@CreationTimestamp
+	private Date createdOn;
 
-		public InventoryEntity() {
+	@Column(name = "updatedOn")
+	@UpdateTimestamp
+	private Date updatedOn;
 
-	    }
+	public boolean getStatus() {
+		return status;
+	}
 
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
 
-	    public InventoryEntity(String productDescription,String productName,boolean status,int price,int quantity, DistributorEntity employeeCategory) {
-	        this.productDescription=productDescription;
-	        this.employeeCategory = employeeCategory;
-	        this.status=status;
-	        this.price=price;
-	        this.quantity=quantity;
-	        this.productName=productName;
-	    }
+	public int getPrice() {
+		return price;
+	}
 
-	    @Id
-	    @GeneratedValue(strategy = GenerationType.AUTO)
-	    public long getId() {
-	        return id;
-	    }
+	public void setPrice(int price) {
+		this.price = price;
+	}
 
-	    public void setId(long id) {
-	        this.id = id;
-	    }
+	public Date getCreatedOn() {
+		return createdOn;
+	}
 
-	    
-	    
-        @NotNull
-	    @ManyToOne(cascade=CascadeType.ALL ,fetch=FetchType.EAGER)
-	    @JoinColumn(name = "distributor_id" ,referencedColumnName="id")
-	    public DistributorEntity getemployeeCategory() {
-	        return employeeCategory;
-	    }
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
+	}
 
-	    public void setemployeeCategory(DistributorEntity employeeCategory) {
-	        this.employeeCategory = employeeCategory;
-	    }
+	public Date getUpdatedOn() {
+		return updatedOn;
+	}
 
-		/**
-		 * @return the productDescription
-		 */
-		public String getProductDescription() {
-			return productDescription;
-		}
+	public void setUpdatedOn(Date updatedOn) {
+		this.updatedOn = updatedOn;
+	}
 
-		/**
-		 * @param productDescription the productDescription to set
-		 */
-		public void setProductDescription(String productDescription) {
-			this.productDescription = productDescription;
-		}
+	public int getQuantity() {
+		return quantity;
+	}
 
-		/**
-		 * @return the productName
-		 */
-		public String getProductName() {
-			return productName;
-		}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 
-		/**
-		 * @param productName the productName to set
-		 */
-		public void setProductName(String productName) {
-			this.productName = productName;
-		}	
+	public InventoryEntity() {
+
+	}
+
+	public InventoryEntity(String productName, String productDescription, DistributorEntity employeeCategory,
+			boolean status, int price, int quantity, Date createdOn, Date updatedOn) {
+		super();
+		this.productName = productName;
+		this.productDescription = productDescription;
+		this.distributor = employeeCategory;
+		this.status = status;
+		this.price = price;
+		this.quantity = quantity;
+		this.createdOn = createdOn;
+		this.updatedOn = updatedOn;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public DistributorEntity getemployeeCategory() {
+		return distributor;
+	}
+
+	public void setemployeeCategory(DistributorEntity employeeCategory) {
+		this.distributor = employeeCategory;
+	}
+
+	public String getProductDescription() {
+		return productDescription;
+	}
+
+	public void setProductDescription(String productDescription) {
+		this.productDescription = productDescription;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	@Override
+	public String toString() {
+		return "InventoryEntity [id=" + id + ", productName=" + productName + ", productDescription="
+				+ productDescription + ", employeeCategory=" + distributor + ", status=" + status + ", price=" + price
+				+ ", quantity=" + quantity + ", createdOn=" + createdOn + ", updatedOn=" + updatedOn + "]";
+	}
 
 }

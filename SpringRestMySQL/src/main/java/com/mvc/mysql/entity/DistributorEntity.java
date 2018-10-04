@@ -8,59 +8,48 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "distributor")
 public class DistributorEntity {
+	@Id
+	private Long id;
 
-		private long id;
-		
-	    private String name;
-	   
-	    
-	    
-	    
-	    
-	    @Column(name="password")
-	    private String password;
-	    public String getPassword() {
-			return password;
-		}
+	@Column(name = "name")
+	private String name;
 
-		public void setPassword(String password) {
-			this.password = password;
-		}
+	@Column(name = "password")
+	private String password;
 
-		public DistributorEntity() {
-			// TODO Auto-generated constructor stub
-		}
-	   
+	public String getPassword() {
+		return password;
+	}
 
-	    
-		public DistributorEntity(long id, String name, String password) {
-			super();
-			this.id = id;
-			this.name = name;
-			
-			this.password = password;
-		}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-		@Id
-	    public long getId() {
-	        return id;
-	    }
+	public DistributorEntity() {
+		// TODO Auto-generated constructor stub
+	}
 
-	    public void setId(long id) {
-	        this.id = id;
-	    }
+	public Long getId() {
+		return id;
+	}
 
-	    public String getName() {
-	        return name;
-	    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-	    public void setName(String name) {
-	        this.name = name;
-	    }
+	public String getName() {
+		return name;
+	}
 
-		
-		
+	public void setName(String name) {
+		this.name = name;
+	}
 
-		
+	public DistributorEntity(long id, String name, String password) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.password = password;
+	}
+
 }
-

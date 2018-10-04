@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mvc.mysql.model.DistributorMV;
-import com.mvc.mysql.model.DistributorVM;
+import com.mvc.mysql.exception.DistributorServiceException;
+import com.mvc.mysql.exception.ResourceNotFound;
 import com.mvc.mysql.model.UserMV;
 import com.mvc.mysql.model.UserVM;
 import com.mvc.mysql.repo.UserRepository;
@@ -26,12 +26,12 @@ public class UserController {
 
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@GetMapping("/users")
-	public List<UserMV> getAllCustomers() {
+	public List<UserMV> getAllCustomers() throws DistributorServiceException, ResourceNotFound {
 		return userService.getAllCustomer();
 	}
 
@@ -47,14 +47,14 @@ public class UserController {
 		return userService.deleteCustomer(id);
 	}
 
-//	@GetMapping(value = "employees/login/{id}/{password}")
-//	public List<UserMV> findByidpassword(@PathVariable long id, @PathVariable String password) {
-//
-//		return userService.findByidpassword(id, password);
-//	}
+	@PostMapping("/users/login")
+	public ResponseEntity<String> loginCustomer(@RequestBody UserVM customer) {
+		return userService.loginCustomer(customer);
+	}
 
 	@PutMapping("/users/{id}")
 	public ResponseEntity<UserMV> updateCustomer(@PathVariable("id") long id, @RequestBody UserVM customer) {
 		return userService.updateCustomer(id, customer);
 	}
+
 }
