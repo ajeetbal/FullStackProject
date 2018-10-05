@@ -22,10 +22,10 @@ public class ExceptionHandlerControllerAdvice {
 		return error;
 	}
 
-	@ExceptionHandler(DistributorServiceException.class)
+	@ExceptionHandler(InternalServerException.class)
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 	public @ResponseBody ExceptionResponse handleDistributorServiceException(
-			final DistributorServiceException exception, final HttpServletRequest request) {
+			final InternalServerException exception, final HttpServletRequest request) {
 
 		ExceptionResponse error = new ExceptionResponse();
 		error.setErrorMessage(exception.getMessage());
@@ -33,5 +33,16 @@ public class ExceptionHandlerControllerAdvice {
 
 		return error;
 	}
+	@ExceptionHandler(BadRequestException.class)
+	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+	public @ResponseBody ExceptionResponse handleBadRequestException(
+			final BadRequestException exception, final HttpServletRequest request) {
 
+		ExceptionResponse error = new ExceptionResponse();
+		error.setErrorMessage(exception.getMessage());
+		error.callerURL(request.getRequestURI());
+
+		return error;
+	}
+	
 }

@@ -7,7 +7,8 @@ public class UserDetailsMV {
 	    private boolean status;
 	    private int price;
 	    private int quantity;
-
+	    private int total;
+	    
 	   // private EmployeeEntity employeeCategory;
 		public long getId() {
 			return id;
@@ -78,6 +79,18 @@ public class UserDetailsMV {
 		 */
 		public void setProductDescription(String productDescription) {
 			this.productDescription = productDescription;
+		}
+		/**
+		 * @return the total
+		 */
+		public int getTotal() {
+			return total;
+		}
+		/**
+		 * @param total the total to set
+		 */
+		public void setTotal(int total) {
+			this.total = total;
 		}
 		
 		

@@ -4,24 +4,52 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
-import com.mvc.mysql.exception.DistributorServiceException;
+import com.mvc.mysql.exception.BadRequestException;
+import com.mvc.mysql.exception.InternalServerException;
 import com.mvc.mysql.exception.ResourceNotFound;
 import com.mvc.mysql.model.DistributorMV;
 import com.mvc.mysql.model.DistributorVM;
 
 public interface DistributorService {
-	public List<DistributorMV> getAllCustomer() throws DistributorServiceException, ResourceNotFound;
 
-	ResponseEntity<String> deleteCustomer(long id);
+	/***
+	 * 
+	 * @return
+	 * @throws InternalServerException
+	 * @throws ResourceNotFound
+	 * @throws BadRequestException
+	 */
+	public List<DistributorMV> getAllCustomer() throws InternalServerException, ResourceNotFound, BadRequestException;
 
-	DistributorMV postCustomer(DistributorVM customer);
+	/***
+	 * 
+	 * @param id
+	 * @return
+	 * @throws ResourceNotFound
+	 */
+	public ResponseEntity<String> deleteCustomer(long id) throws ResourceNotFound;
 
-	ResponseEntity<DistributorMV> updateCustomer(long id, DistributorVM customer);
+	/***
+	 * 
+	 * @param customer
+	 * @return
+	 * @throws BadRequestException
+	 * @throws InternalServerException
+	 */
+	public DistributorMV postCustomer(DistributorVM customer) throws BadRequestException, InternalServerException;
 
-	public ResponseEntity<String> loginCustomer(DistributorVM customer);
+	/***
+	 * 
+	 * @param id
+	 * @param customer
+	 * @return
+	 * @throws BadRequestException
+	 * @throws InternalServerException
+	 */
+	public ResponseEntity<DistributorMV> updateCustomer(long id, DistributorVM customer) throws BadRequestException, InternalServerException;
 
-	List<DistributorMV> getCustomerNull() throws DistributorServiceException, ResourceNotFound;
+	
+	public ResponseEntity<String> loginCustomer(DistributorVM customer) throws BadRequestException, InternalServerException;
 
-	List<DistributorMV> getCustomerException() throws DistributorServiceException, ResourceNotFound;
-
+	
 }

@@ -25,9 +25,11 @@ public class InventoryEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@NotNull
 	@Column(name = "productName")
 	private String productName;
 
+	@NotNull
 	@Column(name = "productDescription")
 	private String productDescription;
 
@@ -36,15 +38,19 @@ public class InventoryEntity {
 	@JoinColumn(name = "distributor_id", referencedColumnName = "id")
 	private DistributorEntity distributor;
 
+	@NotNull
 	@Column(name = "status")
 	private boolean status;
-
+    
+	@NotNull
 	@Column(name = "price")
 	private int price;
 
+	@NotNull
 	@Column(name = "quantity")
 	private int quantity;
 
+	
 	@Column(name = "createdOn")
 	@CreationTimestamp
 	private Date createdOn;
@@ -53,93 +59,183 @@ public class InventoryEntity {
 	@UpdateTimestamp
 	private Date updatedOn;
 
+	/**
+	 * 
+	 * @return status
+	 */
 	public boolean getStatus() {
 		return status;
 	}
 
+	/**
+	 * 
+	 * @param status
+	 */
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
 
+	/**
+	 * 
+	 * @return price
+	 */
 	public int getPrice() {
 		return price;
 	}
 
+	/**
+	 * 
+	 * @param price
+	 */
 	public void setPrice(int price) {
 		this.price = price;
 	}
 
+	/**
+	 * 
+	 * @return createdOn
+	 */
 	public Date getCreatedOn() {
 		return createdOn;
 	}
 
+	/**
+	 * 
+	 * @param createdOn
+	 */
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
 
+	/**
+	 * 
+	 * @return updatedOn
+	 */
 	public Date getUpdatedOn() {
 		return updatedOn;
 	}
 
+	/**
+	 * 
+	 * @param updatedOn
+	 */
 	public void setUpdatedOn(Date updatedOn) {
 		this.updatedOn = updatedOn;
 	}
 
+	/**
+	 * 
+	 * @return quantity
+	 */
 	public int getQuantity() {
 		return quantity;
 	}
 
+	/**
+	 * 
+	 * @param quantity
+	 */
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 
+	/**
+	 * 
+	 */
 	public InventoryEntity() {
 
 	}
 
-	public InventoryEntity(String productName, String productDescription, DistributorEntity employeeCategory,
-			boolean status, int price, int quantity, Date createdOn, Date updatedOn) {
+/**
+ * 
+ * @return id
+ */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * 
+	 * @param id
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	/**
+	 * 
+	 * @return distributor
+	 */
+	public DistributorEntity getemployeeCategory() {
+		return distributor;
+	}
+
+	/**
+	 * 
+	 * @param employeeCategory
+	 */
+	public void setemployeeCategory(DistributorEntity employeeCategory) {
+		this.distributor = employeeCategory;
+	}
+
+	/**
+	 * 
+	 * @return productDescription
+	 */
+	public String getProductDescription() {
+		return productDescription;
+	}
+
+	/**
+	 * 
+	 * @param productDescription
+	 */
+	public void setProductDescription(String productDescription) {
+		this.productDescription = productDescription;
+	}
+
+	/**
+	 * 
+	 * @return productName
+	 */
+	public String getProductName() {
+		return productName;
+	}
+
+	/**
+	 * 
+	 * @param productName
+	 */
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	/**
+	 * 
+	 * @param id
+	 * @param productName
+	 * @param productDescription
+	 * @param distributor
+	 * @param status
+	 * @param price
+	 * @param quantity
+	 * @param createdOn
+	 * @param updatedOn
+	 */
+	
+	public InventoryEntity(Long id, @NotNull String productName, @NotNull String productDescription,
+			@NotNull DistributorEntity distributor, @NotNull boolean status, @NotNull int price, @NotNull int quantity,
+			Date createdOn, Date updatedOn) {
 		super();
+		this.id = id;
 		this.productName = productName;
 		this.productDescription = productDescription;
-		this.distributor = employeeCategory;
+		this.distributor = distributor;
 		this.status = status;
 		this.price = price;
 		this.quantity = quantity;
 		this.createdOn = createdOn;
 		this.updatedOn = updatedOn;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public DistributorEntity getemployeeCategory() {
-		return distributor;
-	}
-
-	public void setemployeeCategory(DistributorEntity employeeCategory) {
-		this.distributor = employeeCategory;
-	}
-
-	public String getProductDescription() {
-		return productDescription;
-	}
-
-	public void setProductDescription(String productDescription) {
-		this.productDescription = productDescription;
-	}
-
-	public String getProductName() {
-		return productName;
-	}
-
-	public void setProductName(String productName) {
-		this.productName = productName;
 	}
 
 	@Override

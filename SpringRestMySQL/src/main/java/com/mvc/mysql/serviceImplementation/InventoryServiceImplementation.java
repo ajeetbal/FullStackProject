@@ -8,6 +8,8 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 
 import com.mvc.mysql.entity.InventoryEntity;
+import com.mvc.mysql.exception.BadRequestException;
+import com.mvc.mysql.exception.InternalServerException;
+import com.mvc.mysql.exception.ResourceNotFound;
 import com.mvc.mysql.entity.DistributorEntity;
 import com.mvc.mysql.model.InventoryMV;
 import com.mvc.mysql.model.InventoryVM;
@@ -36,50 +41,89 @@ public class InventoryServiceImplementation implements InventoryService {
 
 	Date created = new Date();
 	Date updated = new Date();
+	final static Logger logger = LoggerFactory.getLogger(DistributorServiceImplementation.class);
 
+	/**
+	 * @description create inventoryItems
+	 */
 	@Override
-	public InventoryMV postCustomer(InventoryVM customer) {
+	public InventoryMV postCustomer(InventoryVM customer) throws BadRequestException, InternalServerException {
+		try {
+			logger.info("Create inventory");
+			if (customer == null) {
+				throw new BadRequestException("You can't send null in fields..");
 
-		InventoryEntity c = modelMapper.map(customer, InventoryEntity.class);
-		c.setCreatedOn(created);
-		c.setUpdatedOn(updated);
-		Optional<DistributorEntity> employee = distributorRepository.findById(customer.getEmployeeId());
-		if (!employee.isPresent()) {
+			}
+			InventoryEntity c = modelMapper.map(customer, InventoryEntity.class);
+			c.setCreatedOn(created);
+			c.setUpdatedOn(updated);
+			Optional<DistributorEntity> employee = distributorRepository.findById(customer.getEmployeeId());
+			if (!employee.isPresent()) {
+
+			}
+			c.setemployeeCategory(employee.get());
+			InventoryEntity _customer = inventoryRepository.save(c);
+			return modelMapper.map(_customer, InventoryMV.class);
+		} catch (Exception e) {
+			throw new InternalServerException("Internal Server Error");
 
 		}
-		c.setemployeeCategory(employee.get());
-		InventoryEntity _customer = inventoryRepository.save(c);
-		return modelMapper.map(_customer, InventoryMV.class);
-//		EmployeeEntity employee = 
-//				c.setemployeeCategory(employeeCategory);
 	}
 
+	/**
+	 * @description Delete inventoryItems by id
+	 */
 	@Override
-	public ResponseEntity<String> deleteCustomer(long id) {
-		System.out.println("Delete Customer with ID = " + id + "...");
+	public ResponseEntity<String> deleteCustomer(long id) throws ResourceNotFound {
 
-		inventoryRepository.deleteById(id);
+		if (inventoryRepository.existsById(id)) {
+			logger.info("delete inventory by id=" + id);
 
-		return new ResponseEntity<>("Customer has been deleted!", HttpStatus.OK);
+			inventoryRepository.deleteById(id);
+
+			return new ResponseEntity<>("Customer has been deleted!", HttpStatus.OK);
+		} else {
+			throw new ResourceNotFound("inventory id not found..");
+		}
 	}
 
+	/**
+	 * @description get all inventoryItems
+	 */
 	@Override
-	public List<InventoryMV> getAllCustomers() {
+	public List<InventoryMV> getAllCustomers() throws InternalServerException, ResourceNotFound, BadRequestException {
+		try {
+			logger.info("Get inventory details..");
 
-		System.out.println("Get all Products...");
+			List<InventoryEntity> customers = new ArrayList<>();
 
-		List<InventoryEntity> customers = new ArrayList<>();
+			inventoryRepository.findAll().forEach(customers::add);
+			Type listType = new TypeToken<List<InventoryEntity>>() {
+			}.getType();
+			if (customers.isEmpty()) {
 
-		inventoryRepository.findAll().forEach(customers::add);
-		Type listType = new TypeToken<List<InventoryEntity>>() {
-		}.getType();
-		return modelMapper.map(customers, listType);
+				throw new ResourceNotFound("inventoryr not found");
+			} else {
+				return modelMapper.map(customers, listType);
+			}
+		} catch (Exception e) {
+			throw new InternalServerException("Internal Server Error");
+
+		}
 	}
 
+	/**
+	 * @description Update inventoryItems
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public ResponseEntity<InventoryMV> updateCustomer(long id, InventoryVM customer) {
-		System.out.println("Update Customer with ID = " + id + "...");
+	public ResponseEntity<InventoryMV> updateCustomer(long id, InventoryVM customer)throws BadRequestException,InternalServerException {
+try {
+	if(customer==null)
+	{
+		throw new BadRequestException("You can't send null in fields..");
+	}
+		logger.info("Update inventory");
 
 		Optional<InventoryEntity> customerData = inventoryRepository.findById(id);
 
@@ -91,14 +135,23 @@ public class InventoryServiceImplementation implements InventoryService {
 			return new ResponseEntity<InventoryMV>(
 					(MultiValueMap<String, String>) (MultiValueMap<String, String>) inventoryRepository.save(_customer),
 					HttpStatus.OK);
-		} else {
-			return new ResponseEntity<InventoryMV>(HttpStatus.NOT_FOUND);
+		}  else {
+			throw new ResourceNotFound("Inventory not found");
 		}
+}catch(Exception e)
+{
+	throw new InternalServerException("Internal Server Error");
+}
 	}
 
+	/**
+	 * @description Find inventoryItems
+	 */
 	@Override
 	public Optional<InventoryEntity> findById(Long id) {
 		// TODO Auto-generated method stub
+		logger.info("Find inventory element By id..");
+
 		return inventoryRepository.findById(id);
 	}
 }
