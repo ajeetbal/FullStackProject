@@ -36,8 +36,8 @@ public class UserDetailsController {
 	 * @throws BadRequestException
 	 */
 	@GetMapping("/usersDetails")
-	public List<UserDetailsMV> getAllCustomers() throws InternalServerException, ResourceNotFound, BadRequestException {
-		return userDetailsService.getAllCustomer();
+	public List<UserDetailsMV> getAllUserDetails() throws InternalServerException, ResourceNotFound, BadRequestException {
+		return userDetailsService.getAllUserDetails();
 	}
 
 	/**

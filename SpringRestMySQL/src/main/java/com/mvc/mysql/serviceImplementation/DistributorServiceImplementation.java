@@ -35,34 +35,34 @@ public class DistributorServiceImplementation implements DistributorService {
 	@Autowired
 	ModelMapper modelMapper;
 
-	private String rawPassword;
-	
+	private String password;
+
 	final static Logger logger = LoggerFactory.getLogger(DistributorServiceImplementation.class);
 
-	
 	/**
 	 * @description get all distributors
 	 */
 	@Override
-	public List<DistributorMV> getAllCustomer() throws InternalServerException,ResourceNotFound,BadRequestException {
+	public List<DistributorMV> getAllDistributor()
+			throws InternalServerException, ResourceNotFound, BadRequestException {
 		try {
-		logger.info("get all customer...");
-		List<DistributorEntity> customers = new ArrayList<>();
+			logger.info("get all distributor...");
 
-		DistributorRepository.findAll().forEach(customers::add);
-		Type listType = new TypeToken<List<InventoryEntity>>() {
-		}.getType();
-		
-			if (customers.isEmpty()) {
+			List<DistributorEntity> distributors = new ArrayList<>();
+
+			DistributorRepository.findAll().forEach(distributors::add);
+			Type listType = new TypeToken<List<InventoryEntity>>() {
+			}.getType();
+
+			if (distributors.isEmpty()) {
 
 				throw new ResourceNotFound("Distributor not found");
 			}
 
 			else {
-				return modelMapper.map(customers, listType);
+				return modelMapper.map(distributors, listType);
 			}
 		}
-		
 
 		catch (Exception e) {
 
@@ -74,118 +74,111 @@ public class DistributorServiceImplementation implements DistributorService {
 	 * @description Create distributors
 	 */
 	@Override
-	public DistributorMV postCustomer(DistributorVM customer) throws BadRequestException,InternalServerException {
+	public ResponseEntity<DistributorMV> postDistributor(DistributorVM distributor)
+			throws BadRequestException, InternalServerException {
 		try {
-		logger.info("create customer...");
-			if (customer == null) {
+			logger.info("create distributor...");
+			if (distributor == null) {
 				throw new BadRequestException("You can't send null in fields..");
+			} else {
+
+				DistributorEntity c = modelMapper.map(distributor, DistributorEntity.class);
+				Long i = (long) 4;
+				String encrypted = encrypt(distributor.getPassword());
+				c.setPassword(encrypted);
+
+				DistributorEntity distributorEntity = DistributorRepository.save(c);
+				return new ResponseEntity<DistributorMV>(modelMapper.map(distributorEntity, DistributorMV.class),
+						HttpStatus.OK);
+				// return modelMapper.map(_customer, DistributorMV.class);
+
 			}
-			else {
-		DistributorEntity c = modelMapper.map(customer, DistributorEntity.class);
-		
-		String encrypted = encrypt(customer.getPassword());
-		c.setPassword(encrypted);
-		
-		DistributorEntity _customer = DistributorRepository.save(c);
-		return modelMapper.map(_customer, DistributorMV.class);
-		}
-		}
-		catch(Exception e)
-		{
-			throw new InternalServerException("Internal Server Error");	
+
+		} catch (Exception e) {
+			throw new InternalServerException("Internal Server Error");
 		}
 
 	}
 
-	
 	/**
 	 * @description update distributors
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public ResponseEntity<DistributorMV> updateCustomer(@PathVariable("id") long id,
-			@RequestBody DistributorVM customer)throws BadRequestException,InternalServerException {
+	public ResponseEntity<DistributorMV> updateDistributor(@PathVariable("id") long id,
+			@RequestBody DistributorVM distributor) throws BadRequestException, InternalServerException {
 		try {
-			if(customer==null)
-			{
+			if (distributor == null) {
 				throw new BadRequestException("You can't send null in fields..");
 			}
-		logger.info("Update customer...");
+			logger.info("Update Distributor...");
 
-		Optional<DistributorEntity> customerData = DistributorRepository.findById(id);
+			Optional<DistributorEntity> distributorEntity = DistributorRepository.findById(id);
 
-		if (customerData.isPresent()) {
-			DistributorEntity _customer = customerData.get();
-			_customer.setName(customer.getName());
+			if (distributorEntity.isPresent()) {
+				DistributorEntity _distributor = distributorEntity.get();
+				_distributor.setName(distributor.getName());
 
-			return new ResponseEntity<DistributorMV>(
-					(MultiValueMap<String, String>) DistributorRepository.save(_customer), HttpStatus.OK);
-		} else {
-			throw new ResourceNotFound("Distributor not found");
-		}
-		}
-		catch(Exception e)
-		{
+				return new ResponseEntity<DistributorMV>(
+						(MultiValueMap<String, String>) DistributorRepository.save(_distributor), HttpStatus.OK);
+			} else {
+				throw new ResourceNotFound("Distributor not found");
+			}
+		} catch (Exception e) {
 			throw new InternalServerException("Internal Server Error");
 		}
 	}
 
 	/**
-	 * @description delete  distributor by id
+	 * @description delete distributor by id
 	 */
 	@Override
-	public ResponseEntity<String> deleteCustomer(@PathVariable("id") long id) throws ResourceNotFound {
+	public ResponseEntity<String> deleteDistributor(@PathVariable("id") long id) throws ResourceNotFound {
 		logger.info("delete customer...");
-		if(	DistributorRepository.existsById(id))
-		{
+		if (DistributorRepository.existsById(id)) {
 			DistributorRepository.deleteById(id);
-			return new ResponseEntity<>("Customer has been deleted!", HttpStatus.OK);
-		
-		}
-		else
-		{
+			return new ResponseEntity<>("DistributorData has been deleted!", HttpStatus.OK);
+
+		} else {
 			throw new ResourceNotFound("Distributor id not found..");
 
 		}
-		
+
 	}
 
 	/**
 	 * @description login distributors
 	 */
 	@Override
-	public ResponseEntity<String> loginCustomer(DistributorVM customer)throws BadRequestException,InternalServerException {
+	public ResponseEntity<String> loginDistributor(DistributorVM distributor)
+			throws BadRequestException, InternalServerException {
 		// TODO Auto-generated method stub
 		try {
-			if(customer==null)
-			{
+			if (distributor == null) {
 				throw new BadRequestException("You can't send null in fields..");
 
 			}
-			
-		logger.info("login customer...");
-		List<DistributorEntity> customerData = DistributorRepository.findByidpassword(customer.getId(),
-				encrypt(customer.getPassword()));
-		if (customerData.isEmpty()) {
-			return new ResponseEntity<>("Login Unsuccessful!", HttpStatus.NOT_FOUND);
-		} else {
 
-			return new ResponseEntity<>("successfully loged in!", HttpStatus.OK);
-		}
-		}
-		catch(Exception e)
-		{
+			logger.info("login customer...");
+			List<DistributorEntity> distributorData = DistributorRepository.findByNameAndPassword(distributor.getName(),
+					encrypt(distributor.getPassword()));
+			if (distributorData.isEmpty()) {
+				return new ResponseEntity<>("Login Unsuccessful!", HttpStatus.NOT_FOUND);
+			} else {
+
+				return new ResponseEntity<>("successfully loged in!", HttpStatus.OK);
+			}
+		} catch (Exception e) {
 			throw new InternalServerException("Internal Server Error");
 
 		}
 	}
 
+	public String encrypt(String password) {
 
-	public String encrypt(String rawPassword) {
+		this.password = password;
 
-		this.rawPassword = rawPassword;
-
-		return "crd56" + this.rawPassword + "!@#awfs88";
+		return "crd56" + this.password + "!@#awfs88";
 	}
 
 }

@@ -2,58 +2,25 @@ package com.mvc.mysql.model;
 
 public class InventoryVM {
 
-	private Long id;
-	 private String productName;
-	    private String productDescription;
-	private Long employeeId;
-	private boolean status;
+	private String productName;
+	private String productDescription;
+	private Long distributorId;
+
 	private int price;
 	private int quantity;
+
 	/**
-	 * @return the id
+	 * @return the distributorId
 	 */
-	public Long getId() {
-		return id;
+	public Long getDistributorId() {
+		return distributorId;
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param distributorId the distributorId to set
 	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	/**
-	 * @return the qualification
-	 */
-	
-
-	/**
-	 * @return the employeeId
-	 */
-	public Long getEmployeeId() {
-		return employeeId;
-	}
-
-	/**
-	 * @param employeeId the employeeId to set
-	 */
-	public void setEmployeeId(Long employeeId) {
-		this.employeeId = employeeId;
-	}
-
-	/**
-	 * @return the status
-	 */
-	public boolean getStatus() {
-		return status;
-	}
-
-	/**
-	 * @param status the status to set
-	 */
-	public void setStatus(boolean status) {
-		this.status = status;
+	public void setDistributorId(Long distributorId) {
+		this.distributorId = distributorId;
 	}
 
 	/**

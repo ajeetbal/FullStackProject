@@ -16,13 +16,7 @@ public class UserMV {
 	public void setName(String name) {
 		this.name = name;
 	}
-//	public Set<InventoryMV> getEducation() {
-//		return education;
-//	}
-//	public void setEducation(Set<InventoryMV> education) {
-//		this.education = education;
-//	}
-	
+
 	public long getId() {
 		return id;
 	}

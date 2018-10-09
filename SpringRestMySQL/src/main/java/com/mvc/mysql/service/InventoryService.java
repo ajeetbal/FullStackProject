@@ -21,7 +21,7 @@ public interface InventoryService {
 	 * @throws ResourceNotFound
 	 * @throws BadRequestException
 	 */
-	List<InventoryMV> getAllCustomers() throws InternalServerException, ResourceNotFound, BadRequestException;
+	List<InventoryMV> getAllInventory() throws InternalServerException, ResourceNotFound, BadRequestException;
 
 	/***
 	 * 
@@ -30,7 +30,7 @@ public interface InventoryService {
 	 * @throws BadRequestException
 	 * @throws InternalServerException
 	 */
-	InventoryMV postCustomer(InventoryVM customer) throws BadRequestException, InternalServerException;
+	ResponseEntity<InventoryMV> postInventory(InventoryVM inventory) throws BadRequestException, InternalServerException;
 
 	/***
 	 * 
@@ -38,7 +38,7 @@ public interface InventoryService {
 	 * @return
 	 * @throws ResourceNotFound
 	 */
-	ResponseEntity<String> deleteCustomer(long id) throws ResourceNotFound;
+	ResponseEntity<String> deleteInventory(long id) throws ResourceNotFound;
 
 	/***
 	 * 
@@ -48,7 +48,7 @@ public interface InventoryService {
 	 * @throws BadRequestException
 	 * @throws InternalServerException
 	 */
-	ResponseEntity<InventoryMV> updateCustomer(long id, InventoryVM customer) throws BadRequestException, InternalServerException;
+	ResponseEntity<InventoryMV> updateInventory(long id, InventoryVM inventory) throws BadRequestException, InternalServerException;
 
 	/***
 	 * 

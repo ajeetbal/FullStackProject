@@ -35,13 +35,14 @@ public class UserController {
 
 	/**
 	 * 
-	 * @return
 	 * @throws InternalServerException
 	 * @throws ResourceNotFound
+	 * 
+	 * @return UserMV
 	 */
 	@GetMapping("/users")
-	public List<UserMV> getAllCustomers() throws InternalServerException, ResourceNotFound {
-		return userService.getAllCustomer();
+	public List<UserMV> getAllUsers() throws InternalServerException, ResourceNotFound {
+		return userService.getAllUsers();
 	}
 
 	/**
@@ -52,9 +53,9 @@ public class UserController {
 	 * @throws InternalServerException
 	 */
 	@PostMapping(value = "/users/create")
-	public UserMV postCustomer(@Valid @RequestBody UserVM customer) throws BadRequestException, InternalServerException {
+	public ResponseEntity<UserMV> postUsers(@Valid @RequestBody UserVM users) throws BadRequestException, InternalServerException {
 
-		return userService.postCustomer(customer);
+		return userService.postUsers(users);
 	}
 
 	/***
@@ -64,9 +65,9 @@ public class UserController {
 	 * @throws ResourceNotFound
 	 */
 	@DeleteMapping("/users/{id}")
-	public ResponseEntity<String> deleteCustomer(@Valid @PathVariable("id") long id) throws ResourceNotFound {
+	public ResponseEntity<String> deleteUsers(@Valid @PathVariable("id") long id) throws ResourceNotFound {
 
-		return userService.deleteCustomer(id);
+		return userService.deleteUsers(id);
 	}
 
 	/***
@@ -77,8 +78,8 @@ public class UserController {
 	 * @throws InternalServerException
 	 */
 	@PostMapping("/users/login")
-	public ResponseEntity<String> loginCustomer(@Valid @RequestBody UserVM customer) throws BadRequestException, InternalServerException {
-		return userService.loginCustomer(customer);
+	public ResponseEntity<String> loginUsers(@Valid @RequestBody UserVM users) throws BadRequestException, InternalServerException {
+		return userService.loginUsers(users);
 	}
 
 	/***
@@ -90,8 +91,8 @@ public class UserController {
 	 * @throws InternalServerException
 	 */
 	@PutMapping("/users/{id}")
-	public ResponseEntity<UserMV> updateCustomer(@Valid @PathVariable("id") long id, @RequestBody UserVM customer) throws BadRequestException, InternalServerException {
-		return userService.updateCustomer(id, customer);
+	public ResponseEntity<UserMV> updateUsers(@Valid @PathVariable("id") long id, @RequestBody UserVM users) throws BadRequestException, InternalServerException {
+		return userService.updateUsers(id, users);
 	}
 
 }

@@ -10,5 +10,5 @@ import com.mvc.mysql.entity.UserEntity;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity,Long> {
 
-	List<UserEntity> findByIdAndPassword(long id,String password);
+	List<UserEntity> findByNameAndPassword(String name,String password);
 }

@@ -39,9 +39,9 @@ public class DistributorController {
 	 * @throws InternalServerException
 	 */
 	@PostMapping(value = "/distributors/create")
-	public DistributorMV postCustomer(@Valid @RequestBody DistributorVM customer)
+	public ResponseEntity<DistributorMV> postDistributor(@Valid @RequestBody DistributorVM distributor)
 			throws BadRequestException, InternalServerException {
-		return distributorService.postCustomer(customer);
+		return distributorService.postDistributor(distributor);
 	}
 
 	/***
@@ -51,8 +51,8 @@ public class DistributorController {
 	 * @throws ResourceNotFound
 	 */
 	@DeleteMapping("/distributors/{id}")
-	public ResponseEntity<String> deleteCustomer(@Valid @PathVariable("id") long id) throws ResourceNotFound {
-		return distributorService.deleteCustomer(id);
+	public ResponseEntity<String> deleteDistributor(@Valid @PathVariable("id") long id) throws ResourceNotFound {
+		return distributorService.deleteDistributor(id);
 	}
 
 	/***
@@ -63,9 +63,9 @@ public class DistributorController {
 	 * @throws InternalServerException
 	 */
 	@PostMapping("/distributors/login")
-	public ResponseEntity<String> loginCustomer(@Valid @RequestBody DistributorVM customer)
+	public ResponseEntity<String> loginDistributor(@Valid @RequestBody DistributorVM distributor)
 			throws BadRequestException, InternalServerException {
-		return distributorService.loginCustomer(customer);
+		return distributorService.loginDistributor(distributor);
 	}
 
 	/***
@@ -77,8 +77,8 @@ public class DistributorController {
 	 * @throws InternalServerException
 	 */
 	@PutMapping("/distributors/{id}")
-	public ResponseEntity<DistributorMV> updateCustomer(@Valid @PathVariable("id") long id,
-			@RequestBody DistributorVM customer) throws BadRequestException, InternalServerException {
-		return distributorService.updateCustomer(id, customer);
+	public ResponseEntity<DistributorMV> updateDistributor(@Valid @PathVariable("id") long id,
+			@RequestBody DistributorVM distributor) throws BadRequestException, InternalServerException {
+		return distributorService.updateDistributor(id, distributor);
 	}
 }

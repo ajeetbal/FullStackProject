@@ -19,7 +19,7 @@ public interface DistributorService {
 	 * @throws ResourceNotFound
 	 * @throws BadRequestException
 	 */
-	public List<DistributorMV> getAllCustomer() throws InternalServerException, ResourceNotFound, BadRequestException;
+	public List<DistributorMV> getAllDistributor() throws InternalServerException, ResourceNotFound, BadRequestException;
 
 	/***
 	 * 
@@ -27,7 +27,7 @@ public interface DistributorService {
 	 * @return
 	 * @throws ResourceNotFound
 	 */
-	public ResponseEntity<String> deleteCustomer(long id) throws ResourceNotFound;
+	public ResponseEntity<String> deleteDistributor(long id) throws ResourceNotFound;
 
 	/***
 	 * 
@@ -36,7 +36,7 @@ public interface DistributorService {
 	 * @throws BadRequestException
 	 * @throws InternalServerException
 	 */
-	public DistributorMV postCustomer(DistributorVM customer) throws BadRequestException, InternalServerException;
+	public ResponseEntity<DistributorMV> postDistributor(DistributorVM distributor) throws BadRequestException, InternalServerException;
 
 	/***
 	 * 
@@ -46,10 +46,10 @@ public interface DistributorService {
 	 * @throws BadRequestException
 	 * @throws InternalServerException
 	 */
-	public ResponseEntity<DistributorMV> updateCustomer(long id, DistributorVM customer) throws BadRequestException, InternalServerException;
+	public ResponseEntity<DistributorMV> updateDistributor(long id, DistributorVM distributor) throws BadRequestException, InternalServerException;
 
 	
-	public ResponseEntity<String> loginCustomer(DistributorVM customer) throws BadRequestException, InternalServerException;
+	public ResponseEntity<String> loginDistributor(DistributorVM distributor) throws BadRequestException, InternalServerException;
 
 	
 }

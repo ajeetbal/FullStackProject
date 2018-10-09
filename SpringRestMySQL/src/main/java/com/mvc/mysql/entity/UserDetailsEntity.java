@@ -20,9 +20,10 @@ import javax.validation.constraints.NotNull;
 @Table(name = "userDetails")
 public class UserDetailsEntity {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
-	
 	@NotNull
 	@Column(name = "productName")
 	private String productName;
@@ -30,13 +31,9 @@ public class UserDetailsEntity {
 	@NotNull
 	@Column(name = "productDescription")
 	private String productDescription;
-	
+
 	@NotNull
 	private UserEntity employeeCategory;
-	
-	@NotNull
-	@Column(name = "status")
-	private boolean status;
 
 	@NotNull
 	@Column(name = "price")
@@ -45,25 +42,11 @@ public class UserDetailsEntity {
 	@NotNull
 	@Column(name = "quantity")
 	private int quantity;
-	
+
 	@NotNull
-	@Column(name="total")
+	@Column(name = "total", columnDefinition = "int default price*quantity")
 	private int total;
 
-	/**
-	 * 
-	 * @return status
-	 */
-	public boolean getStatus() {
-		return status;
-	}
-	/**
-	 * 
-	 * @param status
-	 */
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
 	/**
 	 * 
 	 * @return price
@@ -71,6 +54,7 @@ public class UserDetailsEntity {
 	public int getPrice() {
 		return price;
 	}
+
 	/**
 	 * 
 	 * @param price
@@ -86,6 +70,7 @@ public class UserDetailsEntity {
 	public int getQuantity() {
 		return quantity;
 	}
+
 	/**
 	 * 
 	 * @param quantity
@@ -93,10 +78,11 @@ public class UserDetailsEntity {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-    /**
-     * 
-     * @return id
-     */
+
+	/**
+	 * 
+	 * @return id
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public long getId() {
@@ -110,6 +96,7 @@ public class UserDetailsEntity {
 	public void setId(long id) {
 		this.id = id;
 	}
+
 	/**
 	 * 
 	 * @return productName
@@ -117,6 +104,7 @@ public class UserDetailsEntity {
 	public String getProductName() {
 		return productName;
 	}
+
 	/**
 	 * 
 	 * @param prodctName
@@ -143,6 +131,7 @@ public class UserDetailsEntity {
 	public void setemployeeCategory(UserEntity employeeCategory) {
 		this.employeeCategory = employeeCategory;
 	}
+
 	/**
 	 * 
 	 * @return productDescription
@@ -150,6 +139,7 @@ public class UserDetailsEntity {
 	public String getProductDescription() {
 		return productDescription;
 	}
+
 	/**
 	 * 
 	 * @param productDescription
@@ -157,24 +147,25 @@ public class UserDetailsEntity {
 	public void setProductDescription(String productDescription) {
 		this.productDescription = productDescription;
 	}
-	
+
 	/**
 	 * @return the total
 	 */
 	public int getTotal() {
 		return total;
 	}
+
 	/**
 	 * @param total the total to set
 	 */
 	public void setTotal(int total) {
-		this.total = total;
+		this.total = this.price * this.quantity;
 	}
-	
-	
+
 	public UserDetailsEntity() {
 
 	}
+
 	/**
 	 * 
 	 * @param id
@@ -187,18 +178,16 @@ public class UserDetailsEntity {
 	 * @param total
 	 */
 	public UserDetailsEntity(long id, @NotNull String productName, @NotNull String productDescription,
-			@NotNull UserEntity employeeCategory, @NotNull boolean status, @NotNull int price, @NotNull int quantity,
-			@NotNull int total) {
+			@NotNull UserEntity employeeCategory, @NotNull int price, @NotNull int quantity, @NotNull int total) {
 		super();
 		this.id = id;
 		this.productName = productName;
 		this.productDescription = productDescription;
 		this.employeeCategory = employeeCategory;
-		this.status = status;
+
 		this.price = price;
 		this.quantity = quantity;
 		this.total = total;
 	}
-
 
 }

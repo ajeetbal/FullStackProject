@@ -18,7 +18,7 @@ public interface UserService  {
 	 * @throws InternalServerException
 	 * @throws ResourceNotFound
 	 */
-	List<UserMV> getAllCustomer() throws InternalServerException,ResourceNotFound;
+	List<UserMV> getAllUsers() throws InternalServerException,ResourceNotFound;
 
 	/***
 	 * 
@@ -27,7 +27,7 @@ public interface UserService  {
 	 * @throws BadRequestException
 	 * @throws InternalServerException
 	 */
-	UserMV postCustomer(UserVM customer) throws BadRequestException, InternalServerException;
+	ResponseEntity<UserMV> postUsers(UserVM users) throws BadRequestException, InternalServerException;
 
 	/***
 	 * 
@@ -35,7 +35,7 @@ public interface UserService  {
 	 * @return
 	 * @throws ResourceNotFound
 	 */
-	ResponseEntity<String> deleteCustomer(long id) throws ResourceNotFound;
+	ResponseEntity<String> deleteUsers(long id) throws ResourceNotFound;
 
 	/***
 	 * 
@@ -45,7 +45,7 @@ public interface UserService  {
 	 * @throws BadRequestException
 	 * @throws InternalServerException
 	 */
-	ResponseEntity<UserMV> updateCustomer(long id, UserVM customer) throws BadRequestException, InternalServerException;
+	ResponseEntity<UserMV> updateUsers(long id, UserVM users) throws BadRequestException, InternalServerException;
 
 	/***
 	 * 
@@ -54,7 +54,7 @@ public interface UserService  {
 	 * @throws BadRequestException
 	 * @throws InternalServerException
 	 */
-	ResponseEntity<String> loginCustomer(UserVM customer) throws BadRequestException, InternalServerException;
+	ResponseEntity<String> loginUsers(UserVM User) throws BadRequestException, InternalServerException;
 
 	
 }

@@ -4,11 +4,11 @@ import java.util.Set;
 
 public class DistributorVM {
 
-	private long id;
+	
 	private String password;
 	private String name;
 	 
-	private Set<InventoryVM> education;
+	private Set<InventoryVM> inventoryProduct;
 
 	public String getName() {
 		return name;
@@ -16,22 +16,6 @@ public class DistributorVM {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Set<InventoryVM> getEducation() {
-		return education;
-	}
-
-	public void setEducation(Set<InventoryVM> education) {
-		this.education = education;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	/**
@@ -46,6 +30,20 @@ public class DistributorVM {
 	 */
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	/**
+	 * @return the inventoryProduct
+	 */
+	public Set<InventoryVM> getInventoryProduct() {
+		return inventoryProduct;
+	}
+
+	/**
+	 * @param inventoryProduct the inventoryProduct to set
+	 */
+	public void setInventoryProduct(Set<InventoryVM> inventoryProduct) {
+		this.inventoryProduct = inventoryProduct;
 	}
 
 }

@@ -39,9 +39,9 @@ public class InventoryController {
 	 * @throws BadRequestException
 	 */
 	@GetMapping("/inventory")
-	public List<InventoryMV> getAllCustomers() throws InternalServerException, ResourceNotFound, BadRequestException {
+	public List<InventoryMV> getAllInventory() throws InternalServerException, ResourceNotFound, BadRequestException {
 
-		return inventoryService.getAllCustomers();
+		return inventoryService.getAllInventory();
 	}
 
 	/***
@@ -52,10 +52,10 @@ public class InventoryController {
 	 * @throws InternalServerException
 	 */
 	@PostMapping(value = "/inventory/create")
-	public InventoryMV postCustomer(@Valid @RequestBody InventoryVM customer)
+	public ResponseEntity<InventoryMV> postInventory(@Valid @RequestBody InventoryVM inventory)
 			throws BadRequestException, InternalServerException {
 
-		return inventoryService.postCustomer(customer);
+		return inventoryService.postInventory(inventory);
 	}
 
 	/***
@@ -65,9 +65,9 @@ public class InventoryController {
 	 * @throws ResourceNotFound
 	 */
 	@DeleteMapping("/inventory/{id}")
-	public ResponseEntity<String> deleteCustomer(@Valid @PathVariable("id") long id) throws ResourceNotFound {
+	public ResponseEntity<String> deleteInventory(@Valid @PathVariable("id") long id) throws ResourceNotFound {
 
-		return inventoryService.deleteCustomer(id);
+		return inventoryService.deleteInventory(id);
 	}
 
 	/***
@@ -79,9 +79,9 @@ public class InventoryController {
 	 * @throws InternalServerException
 	 */
 	@PutMapping("/inventory/{id}")
-	public ResponseEntity<InventoryMV> updateCustomer(@Valid @PathVariable("id") long id,
-			@RequestBody InventoryVM customer) throws BadRequestException, InternalServerException {
-		return inventoryService.updateCustomer(id, customer);
+	public ResponseEntity<InventoryMV> updateInventory(@Valid @PathVariable("id") long id,
+			@RequestBody InventoryVM inventory) throws BadRequestException, InternalServerException {
+		return inventoryService.updateInventory(id,inventory);
 	}
 
 }

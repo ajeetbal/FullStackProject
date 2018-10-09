@@ -5,12 +5,11 @@ public class UserDetailsVM {
 	private Long id;
 	private String productName;
 	private String productDescription;
-	private Long employeeId;
-	private boolean status;
+	private Long userId;
+
 	private int price;
 	private int quantity;
-	
-	
+
 	/**
 	 * @return the id
 	 */
@@ -28,20 +27,40 @@ public class UserDetailsVM {
 	/**
 	 * @return the qualification
 	 */
-	
-
-	/**
-	 * @return the employeeId
-	 */
-	public Long getEmployeeId() {
-		return employeeId;
-	}
 
 	/**
 	 * @return the prodctName
 	 */
 	public String getProdctName() {
 		return productName;
+	}
+
+	/**
+	 * @return the productName
+	 */
+	public String getProductName() {
+		return productName;
+	}
+
+	/**
+	 * @param productName the productName to set
+	 */
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	/**
+	 * @return the userId
+	 */
+	public Long getUserId() {
+		return userId;
+	}
+
+	/**
+	 * @param userId the userId to set
+	 */
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	/**
@@ -52,25 +71,8 @@ public class UserDetailsVM {
 	}
 
 	/**
-	 * @param employeeId the employeeId to set
-	 */
-	public void setEmployeeId(Long employeeId) {
-		this.employeeId = employeeId;
-	}
-
-	/**
 	 * @return the status
 	 */
-	public boolean getStatus() {
-		return status;
-	}
-
-	/**
-	 * @param status the status to set
-	 */
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
 
 	/**
 	 * @return the price
@@ -114,5 +116,4 @@ public class UserDetailsVM {
 		this.productDescription = productDescription;
 	}
 
-	
 }

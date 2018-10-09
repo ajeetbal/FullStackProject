@@ -38,9 +38,7 @@ public class InventoryEntity {
 	@JoinColumn(name = "distributor_id", referencedColumnName = "id")
 	private DistributorEntity distributor;
 
-	@NotNull
-	@Column(name = "status")
-	private boolean status;
+	
     
 	@NotNull
 	@Column(name = "price")
@@ -59,21 +57,6 @@ public class InventoryEntity {
 	@UpdateTimestamp
 	private Date updatedOn;
 
-	/**
-	 * 
-	 * @return status
-	 */
-	public boolean getStatus() {
-		return status;
-	}
-
-	/**
-	 * 
-	 * @param status
-	 */
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
 
 	/**
 	 * 
@@ -224,14 +207,13 @@ public class InventoryEntity {
 	 */
 	
 	public InventoryEntity(Long id, @NotNull String productName, @NotNull String productDescription,
-			@NotNull DistributorEntity distributor, @NotNull boolean status, @NotNull int price, @NotNull int quantity,
+			@NotNull DistributorEntity distributor, @NotNull int price, @NotNull int quantity,
 			Date createdOn, Date updatedOn) {
 		super();
 		this.id = id;
 		this.productName = productName;
 		this.productDescription = productDescription;
 		this.distributor = distributor;
-		this.status = status;
 		this.price = price;
 		this.quantity = quantity;
 		this.createdOn = createdOn;
@@ -241,7 +223,7 @@ public class InventoryEntity {
 	@Override
 	public String toString() {
 		return "InventoryEntity [id=" + id + ", productName=" + productName + ", productDescription="
-				+ productDescription + ", employeeCategory=" + distributor + ", status=" + status + ", price=" + price
+				+ productDescription + ", employeeCategory=" + distributor + ", "+ ", price=" + price
 				+ ", quantity=" + quantity + ", createdOn=" + createdOn + ", updatedOn=" + updatedOn + "]";
 	}
 

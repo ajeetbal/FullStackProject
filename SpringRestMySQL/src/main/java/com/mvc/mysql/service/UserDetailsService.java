@@ -16,7 +16,7 @@ public interface UserDetailsService {
 	 * @throws ResourceNotFound
 	 * @throws BadRequestException
 	 */
-	List<UserDetailsMV> getAllCustomer() throws InternalServerException, ResourceNotFound, BadRequestException;
+	List<UserDetailsMV> getAllUserDetails() throws InternalServerException, ResourceNotFound, BadRequestException;
 
 	/***
 	 * 

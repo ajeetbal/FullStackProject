@@ -51,21 +51,21 @@ public class UserDetailsServiceImplementation implements UserDetailsService {
 	 * @description get all User's product details
 	 */
 	@Override
-	public List<UserDetailsMV> getAllCustomer() throws InternalServerException, ResourceNotFound, BadRequestException{
+	public List<UserDetailsMV> getAllUserDetails() throws InternalServerException, ResourceNotFound, BadRequestException{
 		// TODO Auto-generated method stub
 		try{
 			logger.info("Get all User's product details");
 		
-		List<UserDetailsEntity> customers = new ArrayList<>();
+		List<UserDetailsEntity> userDetails = new ArrayList<>();
 
-		userDetailsRepository.findAll().forEach(customers::add);
+		userDetailsRepository.findAll().forEach(userDetails::add);
 		Type listType = new TypeToken<List<UserDetailsEntity>>() {
 		}.getType();
-		if(customers.isEmpty())
+		if(userDetails.isEmpty())
 		{
 			throw new ResourceNotFound("Details not found..");
 		}
-		return modelMapper.map(customers, listType);
+		return modelMapper.map(userDetails, listType);
 	}
 	catch(Exception e) {
 		throw new InternalServerException("Internal Server Error");
@@ -82,11 +82,16 @@ public class UserDetailsServiceImplementation implements UserDetailsService {
 
 		Optional<InventoryEntity> inventory = inventoryRepository.findById(id);
 		
-		UserDetailsEntity customers = userDetailsRepository
+		
+		
+		UserDetailsEntity usersDetails = userDetailsRepository
 				.save(modelMapper.map(inventory.get(), UserDetailsEntity.class));
 		
-		
-		return modelMapper.map(customers, UserDetailsMV.class);
+		usersDetails.setTotal(usersDetails.getQuantity()*usersDetails.getPrice());
+			
+			 userDetailsRepository
+				.save(modelMapper.map(inventory.get(), UserDetailsEntity.class));
+		return modelMapper.map(usersDetails, UserDetailsMV.class);
 
 	}
 	}
